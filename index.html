@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Modernization Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#4F46E5"/>
+                        <path d="M10 16L14 20L22 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1>Client Modernization Tracker</h1>
+                </div>
+                <p class="subtitle">Internal Dashboard &mdash; AI-Assisted Transformation Overview</p>
+            </div>
+        </header>
+
+        <section class="summary-cards" id="summaryCards">
+            <!-- Populated by JS -->
+        </section>
+
+        <section class="table-section">
+            <div class="table-header">
+                <h2>Project Details</h2>
+                <div class="filter-group">
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="All">All</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Planning">Planning</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="projectTable">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Project Type</th>
+                            <th>Technology</th>
+                            <th>Status</th>
+                            <th>Est. Hours Saved (AI)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Internal Dashboard. Data is for demonstration purposes only.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
