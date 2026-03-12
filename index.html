@@ -3,61 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Modernization Tracker</title>
+    <title>Enterprise Legacy Code Migration Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container fade-in">
         <header>
-            <div class="header-content">
+            <div class="header-left">
                 <div class="logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="#4F46E5"/>
-                        <path d="M10 16L14 20L22 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="36" height="36" rx="10" fill="#4F46E5"/>
+                        <path d="M11 18.5L15.5 23L25 13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <h1>Client Modernization Tracker</h1>
+                    <div>
+                        <h1>Enterprise Legacy Code Migration Tracker</h1>
+                        <p class="subtitle">AI-Assisted Modernization Program &mdash; Powered by Devin</p>
+                    </div>
                 </div>
-                <p class="subtitle">Internal Dashboard &mdash; AI-Assisted Transformation Overview</p>
+            </div>
+            <div class="header-right">
+                <span class="refresh-badge" id="refreshBadge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+                    Last refreshed: <span id="lastRefreshed"></span>
+                </span>
             </div>
         </header>
 
-        <section class="summary-cards" id="summaryCards">
-            <!-- Populated by JS -->
+        <section class="kpi-section">
+            <div class="kpi-card" style="--delay: 0.05s">
+                <div class="kpi-icon streams">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </div>
+                <div class="kpi-content">
+                    <span class="kpi-label">Active Migration Streams</span>
+                    <span class="kpi-value" data-target="12">0</span>
+                </div>
+                <div class="kpi-trend up">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                    +3 vs last quarter
+                </div>
+            </div>
+            <div class="kpi-card" style="--delay: 0.1s">
+                <div class="kpi-icon loc">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+                </div>
+                <div class="kpi-content">
+                    <span class="kpi-label">Total LOC Migrated</span>
+                    <span class="kpi-value" data-target="2.4" data-suffix="M">0</span>
+                </div>
+                <div class="kpi-trend up">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                    +18% vs last quarter
+                </div>
+            </div>
+            <div class="kpi-card" style="--delay: 0.15s">
+                <div class="kpi-icon sessions">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="kpi-content">
+                    <span class="kpi-label">Devin Sessions Completed</span>
+                    <span class="kpi-value" data-target="1847" data-comma="true">0</span>
+                </div>
+                <div class="kpi-trend up">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                    +24% vs last quarter
+                </div>
+            </div>
+            <div class="kpi-card" style="--delay: 0.2s">
+                <div class="kpi-icon hours">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="kpi-content">
+                    <span class="kpi-label">Developer Hours Saved</span>
+                    <span class="kpi-value" data-target="18200" data-comma="true">0</span>
+                </div>
+                <div class="kpi-trend up">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                    +12% vs last quarter
+                </div>
+            </div>
+            <div class="kpi-card" style="--delay: 0.25s">
+                <div class="kpi-icon accuracy">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="kpi-content">
+                    <span class="kpi-label">Avg. Accuracy (Tests Passing)</span>
+                    <span class="kpi-value" data-target="96.3" data-suffix="%">0</span>
+                </div>
+                <div class="kpi-trend up">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+                    +2.1% vs last quarter
+                </div>
+            </div>
+        </section>
+
+        <section class="progress-section">
+            <div class="progress-header">
+                <h2>Overall Migration Progress</h2>
+                <span class="progress-label">68% Complete <span class="progress-detail">(8 of 12 streams delivered)</span></span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" data-progress="68"></div>
+                <div class="milestone" style="left: 25%"><span class="milestone-label">25%</span></div>
+                <div class="milestone" style="left: 50%"><span class="milestone-label">50%</span></div>
+                <div class="milestone" style="left: 75%"><span class="milestone-label">75%</span></div>
+                <div class="milestone" style="left: 100%"><span class="milestone-label">100%</span></div>
+            </div>
         </section>
 
         <section class="table-section">
-            <div class="table-header">
-                <h2>Project Details</h2>
-                <div class="filter-group">
-                    <label for="statusFilter">Filter by Status:</label>
-                    <select id="statusFilter">
-                        <option value="All">All</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Complete">Complete</option>
-                        <option value="Planning">Planning</option>
-                    </select>
+            <div class="table-controls">
+                <h2>Migration Streams</h2>
+                <div class="controls-right">
+                    <div class="filter-group">
+                        <label for="statusFilter">Status:</label>
+                        <select id="statusFilter">
+                            <option value="All">All</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Planning">Planning</option>
+                        </select>
+                    </div>
+                    <span class="row-count" id="rowCount">12 streams</span>
                 </div>
             </div>
             <div class="table-wrapper">
-                <table id="projectTable">
+                <table id="migrationTable">
                     <thead>
                         <tr>
-                            <th>Client Name</th>
-                            <th>Project Type</th>
-                            <th>Technology</th>
-                            <th>Status</th>
-                            <th>Est. Hours Saved (AI)</th>
+                            <th data-sort="name" class="sortable">Stream Name <span class="sort-icon"></span></th>
+                            <th data-sort="type" class="sortable">Migration Type <span class="sort-icon"></span></th>
+                            <th>Source &rarr; Target</th>
+                            <th data-sort="status" class="sortable">Status <span class="sort-icon"></span></th>
+                            <th data-sort="progress" class="sortable">Progress <span class="sort-icon"></span></th>
+                            <th data-sort="loc" class="sortable">LOC Migrated <span class="sort-icon"></span></th>
+                            <th data-sort="sessions" class="sortable">Devin Sessions <span class="sort-icon"></span></th>
+                            <th data-sort="hours" class="sortable">Hours Saved <span class="sort-icon"></span></th>
+                            <th>Lead</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="tableBody"></tbody>
                 </table>
             </div>
         </section>
 
+        <section class="cost-section">
+            <h2>Cost &amp; ROI Analysis</h2>
+            <div class="cost-cards">
+                <div class="cost-card traditional">
+                    <div class="cost-card-header">
+                        <div class="cost-icon traditional-icon">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3>Traditional Migration</h3>
+                        <span class="cost-badge traditional-badge">Without AI</span>
+                    </div>
+                    <div class="cost-metrics">
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Estimated Duration</span>
+                            <span class="cost-metric-value">24 months</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Team Size</span>
+                            <span class="cost-metric-value">85 developers</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Estimated Cost</span>
+                            <span class="cost-metric-value cost-highlight-red">$14.2M</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Rework Rate</span>
+                            <span class="cost-metric-value cost-highlight-red">22%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cost-card ai-assisted">
+                    <div class="cost-card-header">
+                        <div class="cost-icon ai-icon">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3>AI-Assisted Migration</h3>
+                        <span class="cost-badge ai-badge">With Devin</span>
+                    </div>
+                    <div class="cost-metrics">
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Estimated Duration</span>
+                            <span class="cost-metric-value">14 months</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Team Size</span>
+                            <span class="cost-metric-value">34 developers + Devin AI</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Estimated Cost</span>
+                            <span class="cost-metric-value cost-highlight-green">$6.1M</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="cost-metric-label">Rework Rate</span>
+                            <span class="cost-metric-value cost-highlight-green">4%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="savings-banner">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                <span>Projected Savings: <strong>$8.1M</strong> &nbsp;|&nbsp; <strong>10 months</strong> faster &nbsp;|&nbsp; <strong>57%</strong> cost reduction</span>
+            </div>
+        </section>
+
         <footer>
-            <p>&copy; 2026 Internal Dashboard. Data is for demonstration purposes only.</p>
+            <p>&copy; 2026 Cognition AI &mdash; Enterprise Migration Intelligence Dashboard. Data shown is for demonstration purposes.</p>
         </footer>
     </div>
 
