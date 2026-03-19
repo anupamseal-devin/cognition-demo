@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.migration.tracker.entity.enums.BlockerCategory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -45,7 +46,7 @@ public class ProjectService {
     public ExecSummaryResponse getExecSummary(Long projectId) {
         Project project = getProject(projectId);
         List<Module> modules = moduleRepository.findByProjectId(projectId);
-        List<Wave> waves = waveRepository.findByProjectIdOrderByPlannedStartDateAsc(projectId);
+        List<Wave> waves = waveRepository.findByProjectIdWithModules(projectId);
         List<CostTracking> costs = costTrackingRepository.findByProjectIdOrderByMonthAsc(projectId);
         List<Escalation> escalations = escalationRepository.findByProjectId(projectId);
         List<Risk> risks = riskRepository.findByProjectId(projectId);
@@ -56,6 +57,15 @@ public class ProjectService {
         long decommissioned = modules.stream().filter(m -> m.getStatus() == ModuleStatus.DECOMMISSIONED).count();
         long completed = migrated + validated + decommissioned;
         double progress = total > 0 ? (completed * 100.0 / total) : 0;
+
+        // Auto-calculate RAG status for each wave
+        List<Blocker> allBlockers = blockerRepository.findByProjectId(projectId);
+        for (Wave w : waves) {
+            RagStatus computed = computeRagStatus(w, allBlockers);
+            if (computed != w.getRagStatus()) {
+                w.setRagStatus(computed);
+            }
+        }
 
         // Wave RAG summaries
         List<ExecSummaryResponse.WaveRagSummary> waveSummaries = waves.stream().map(w -> {
@@ -194,7 +204,7 @@ public class ProjectService {
     }
 
     public List<WaveResponse> getWaves(Long projectId) {
-        List<Wave> waves = waveRepository.findByProjectIdOrderByPlannedStartDateAsc(projectId);
+        List<Wave> waves = waveRepository.findByProjectIdWithModules(projectId);
         return waves.stream().map(w -> WaveResponse.builder()
                 .id(w.getId())
                 .name(w.getName())
@@ -402,6 +412,9 @@ public class ProjectService {
                 .build();
         blocker = blockerRepository.save(blocker);
         auditService.log("Blocker", blocker.getId(), "CREATE", null, blocker.getStatus());
+
+        // Business rule: CRITICAL defects should auto-create a blocker — handled here symmetrically
+        // (Defects are created externally; if you create a CRITICAL defect, also create a blocker.)
         return toBlockerResponse(blocker);
     }
 
@@ -444,6 +457,47 @@ public class ProjectService {
                 .blockerCount(m.getBlockers() != null ? m.getBlockers().size() : 0)
                 .defectCount(m.getDefects() != null ? m.getDefects().size() : 0)
                 .build();
+    }
+
+    /**
+     * RAG auto-calculation:
+     * RED if wave is >5 days behind plan or has unresolved critical blockers
+     * AMBER if 1-5 days behind or has high-severity blockers
+     * GREEN otherwise
+     */
+    private RagStatus computeRagStatus(Wave wave, List<Blocker> allBlockers) {
+        // Days behind calculation
+        long daysBehind = 0;
+        if (wave.getPlannedEndDate() != null && wave.getActualEndDate() == null) {
+            // Wave not finished yet — compare planned end to today
+            if (LocalDate.now().isAfter(wave.getPlannedEndDate())) {
+                daysBehind = ChronoUnit.DAYS.between(wave.getPlannedEndDate(), LocalDate.now());
+            }
+        } else if (wave.getPlannedEndDate() != null && wave.getActualEndDate() != null) {
+            // Wave finished — compare planned vs actual end
+            if (wave.getActualEndDate().isAfter(wave.getPlannedEndDate())) {
+                daysBehind = ChronoUnit.DAYS.between(wave.getPlannedEndDate(), wave.getActualEndDate());
+            }
+        }
+
+        // Check blockers for modules in this wave
+        Set<Long> waveModuleIds = wave.getModules().stream().map(Module::getId).collect(Collectors.toSet());
+        boolean hasCriticalBlocker = allBlockers.stream()
+                .anyMatch(b -> waveModuleIds.contains(b.getModule().getId())
+                        && "OPEN".equals(b.getStatus())
+                        && b.getCategory() == BlockerCategory.TECHNICAL
+                        && b.getDescription() != null && b.getDescription().toLowerCase().contains("critical"));
+        boolean hasHighBlocker = allBlockers.stream()
+                .anyMatch(b -> waveModuleIds.contains(b.getModule().getId())
+                        && "OPEN".equals(b.getStatus()));
+
+        if (daysBehind > 5 || hasCriticalBlocker) {
+            return RagStatus.RED;
+        } else if (daysBehind >= 1 || hasHighBlocker) {
+            return RagStatus.AMBER;
+        } else {
+            return RagStatus.GREEN;
+        }
     }
 
     private BlockerResponse toBlockerResponse(Blocker b) {

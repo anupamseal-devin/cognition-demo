@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Row, Col, Table, Tag, Select, Input, Spin, Tabs, Typography, Badge, Space, Tooltip } from 'antd';
+import { Card, Row, Col, Table, Tag, Select, Input, Spin, Tabs, Typography, Badge, Space, Tooltip, Statistic } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip,
@@ -242,14 +242,5 @@ export default function DeliveryDetailPage() {
         },
       ]}
     />
-  );
-}
-
-function Statistic({ title, value, valueStyle }: { title: string; value: number; valueStyle?: React.CSSProperties }) {
-  return (
-    <Card size="small">
-      <Text type="secondary">{title}</Text>
-      <div style={{ fontSize: 24, fontWeight: 'bold', ...valueStyle }}>{value}</div>
-    </Card>
   );
 }
