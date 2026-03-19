@@ -16,7 +16,7 @@ public class CostTracking {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Column(nullable = false)
+    @Column(name = "\"MONTH\"", nullable = false)
     private String month;
 
     @Column(precision = 15, scale = 2)
