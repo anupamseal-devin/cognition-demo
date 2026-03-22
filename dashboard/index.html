@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Modernization Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- A. Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1 class="header-title">Client Modernization Tracker</h1>
+            <p class="header-subtitle">Enterprise Legacy Migration Program &mdash; Real-Time Progress Dashboard</p>
+            <time class="header-date" id="currentDate"></time>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+
+        <!-- B. KPI Section -->
+        <section class="kpi-section" aria-label="Key Performance Indicators">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-value" data-target="8" data-decimals="0">0</span>
+                    <span class="kpi-label">Active Migration Streams</span>
+                    <span class="kpi-trend up">&#9650; 14% vs prior period</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value" data-target="1247500" data-decimals="0" data-format="number">0</span>
+                    <span class="kpi-label">Total Lines of Code Migrated</span>
+                    <span class="kpi-trend up">&#9650; 23% vs prior period</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value" data-target="1848" data-decimals="0" data-format="number">0</span>
+                    <span class="kpi-label">AI Sessions Completed</span>
+                    <span class="kpi-trend up">&#9650; 31% vs prior period</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value" data-target="18200" data-decimals="0" data-format="number">0</span>
+                    <span class="kpi-label">Developer Hours Saved</span>
+                    <span class="kpi-trend up">&#9650; 27% vs prior period</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value" data-target="96.4" data-decimals="1">0</span>
+                    <span class="kpi-label">Avg Test Pass Rate (%)</span>
+                    <span class="kpi-trend up">&#9650; 3.2% vs prior period</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- C. Overall Migration Progress -->
+        <section class="progress-section" aria-label="Overall Migration Progress">
+            <h2 class="section-title">Overall Migration Progress</h2>
+            <div class="progress-track-wrapper">
+                <div class="progress-track">
+                    <div class="progress-fill" id="overallProgress" style="--progress-width: 0%"></div>
+                    <div class="milestone" style="left: 25%"><span>25%</span></div>
+                    <div class="milestone" style="left: 50%"><span>50%</span></div>
+                    <div class="milestone" style="left: 75%"><span>75%</span></div>
+                    <div class="milestone milestone-end" style="left: 100%"><span>100%</span></div>
+                </div>
+                <div class="progress-info">
+                    <span class="progress-pct" id="progressPct">0%</span>
+                    <span class="progress-detail" id="progressDetail">0 of 0 streams delivered</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- D. Migration Streams Table -->
+        <section class="table-section" aria-label="Migration Streams">
+            <div class="table-header-row">
+                <h2 class="section-title">Migration Streams</h2>
+                <div class="table-controls">
+                    <label for="statusFilter" class="filter-label">Filter by Status:</label>
+                    <select id="statusFilter" class="status-filter">
+                        <option value="All">All</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Planning">Planning</option>
+                    </select>
+                    <span class="row-count" id="rowCount"></span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="streams-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="name" class="sortable">Stream Name <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="migrationType" class="sortable">Migration Type <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="sourceTarget" class="sortable">Source &#8594; Target <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="status" class="sortable">Status <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="progress" class="sortable">Progress (%) <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="locMigrated" class="sortable">LOC Migrated <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="aiSessions" class="sortable">AI Sessions <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="hoursSaved" class="sortable">Hours Saved <span class="sort-icon">&#8597;</span></th>
+                            <th data-sort="lead" class="sortable">Lead <span class="sort-icon">&#8597;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- E. Cost & ROI Comparison -->
+        <section class="cost-section" aria-label="Cost and ROI Comparison">
+            <h2 class="section-title">Cost &amp; ROI Comparison</h2>
+            <div class="cost-grid">
+                <div class="cost-card traditional">
+                    <h3 class="cost-card-title">Traditional Migration</h3>
+                    <ul class="cost-list">
+                        <li><span class="cost-label">Estimated Duration</span><span class="cost-value">24 months</span></li>
+                        <li><span class="cost-label">Team Size</span><span class="cost-value">85 developers</span></li>
+                        <li><span class="cost-label">Estimated Cost</span><span class="cost-value">$14.2M</span></li>
+                        <li><span class="cost-label">Rework Rate</span><span class="cost-value">22%</span></li>
+                    </ul>
+                </div>
+                <div class="cost-card ai-assisted">
+                    <h3 class="cost-card-title">AI-Assisted Migration</h3>
+                    <ul class="cost-list">
+                        <li><span class="cost-label">Estimated Duration</span><span class="cost-value">14 months</span></li>
+                        <li><span class="cost-label">Team Size</span><span class="cost-value">34 developers + AI</span></li>
+                        <li><span class="cost-label">Estimated Cost</span><span class="cost-value">$6.1M</span></li>
+                        <li><span class="cost-label">Rework Rate</span><span class="cost-value">4%</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="savings-banner">
+                <div class="savings-item">
+                    <span class="savings-value">$8.1M</span>
+                    <span class="savings-label">Total Saved</span>
+                </div>
+                <div class="savings-item">
+                    <span class="savings-value">10 months</span>
+                    <span class="savings-label">Faster Delivery</span>
+                </div>
+                <div class="savings-item">
+                    <span class="savings-value">57%</span>
+                    <span class="savings-label">Cost Reduction</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- F. FTE Man-Hours Saved with AI-Assisted Sessions -->
+        <section class="fte-section" aria-label="FTE Man-Hours Saved">
+            <h2 class="section-title">FTE Man-Hours Saved with AI-Assisted Sessions</h2>
+
+            <!-- F1. Summary KPI Cards -->
+            <div class="fte-kpi-grid">
+                <div class="fte-kpi-card">
+                    <span class="fte-kpi-value" data-target="18200" data-decimals="0" data-format="number" id="fteTotalHours">0</span>
+                    <span class="fte-kpi-label">Total FTE Hours Saved</span>
+                </div>
+                <div class="fte-kpi-card">
+                    <span class="fte-kpi-value" data-target="8.75" data-decimals="2" id="fteEquivalent">0</span>
+                    <span class="fte-kpi-label">FTE Equivalent Saved</span>
+                    <span class="fte-kpi-note">(based on 2,080 hrs/year)</span>
+                </div>
+                <div class="fte-kpi-card">
+                    <span class="fte-kpi-value" data-target="9.85" data-decimals="2" id="fteAvgHours">0</span>
+                    <span class="fte-kpi-label">Avg Hours Saved per AI Session</span>
+                </div>
+                <div class="fte-kpi-card fte-highlight">
+                    <span class="fte-kpi-value" data-target="2.73" data-decimals="2" data-prefix="$" data-suffix="M" id="fteCostSavings">0</span>
+                    <span class="fte-kpi-label">FTE Cost Savings</span>
+                </div>
+            </div>
+
+            <!-- F2. Per-Stream Hours Saved Bar Chart -->
+            <div class="fte-bar-chart-wrapper">
+                <h3 class="subsection-title">Per-Stream Hours Saved</h3>
+                <div class="fte-bar-chart" id="fteBarChart">
+                    <!-- Dynamically generated by JS -->
+                </div>
+            </div>
+
+            <!-- F3. Traditional vs AI-Assisted Effort Comparison Table -->
+            <div class="fte-comparison-wrapper">
+                <h3 class="subsection-title">Traditional vs AI-Assisted Effort Comparison</h3>
+                <div class="table-responsive">
+                    <table class="fte-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Stream Name</th>
+                                <th>Traditional Est. Hours</th>
+                                <th>AI-Assisted Actual Hours</th>
+                                <th>Hours Saved</th>
+                                <th>Savings %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fteComparisonBody"></tbody>
+                        <tfoot id="fteComparisonFoot"></tfoot>
+                    </table>
+                </div>
+                <p class="table-footnote">Traditional estimates based on industry benchmarks for equivalent migration scope</p>
+            </div>
+
+            <!-- F4. FTE Savings Highlight Banner -->
+            <div class="fte-savings-banner" id="fteSavingsBanner">
+                <!-- Text set dynamically by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- G. Footer -->
+    <footer class="dashboard-footer">
+        <p>&copy; 2026 Client Modernization Program. All rights reserved.</p>
+        <p class="disclaimer">This dashboard is for demonstration purposes only. Data shown is illustrative.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
