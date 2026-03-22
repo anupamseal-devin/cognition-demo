@@ -1,0 +1,877 @@
+/* =========================================================
+   Client Modernization Tracker — Dashboard Styles
+   ========================================================= */
+
+/* --- Design Tokens --- */
+:root {
+    /* Primary palette: blue/indigo */
+    --primary-50: #eef2ff;
+    --primary-100: #e0e7ff;
+    --primary-200: #c7d2fe;
+    --primary-400: #818cf8;
+    --primary-500: #6366f1;
+    --primary-600: #4f46e5;
+    --primary-700: #4338ca;
+    --primary-800: #3730a3;
+    --primary-900: #312e81;
+
+    /* Teal/cyan for FTE section */
+    --teal-50: #f0fdfa;
+    --teal-100: #ccfbf1;
+    --teal-200: #99f6e4;
+    --teal-400: #2dd4bf;
+    --teal-500: #14b8a6;
+    --teal-600: #0d9488;
+    --teal-700: #0f766e;
+    --teal-800: #115e59;
+
+    /* Semantic colors */
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --warning: #f59e0b;
+    --warning-light: #fef3c7;
+
+    /* Neutrals */
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+
+    /* Surfaces */
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+
+    /* Typography */
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--gray-800);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* --- Header --- */
+.dashboard-header {
+    background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+    color: #fff;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    opacity: 0.85;
+    font-weight: 400;
+}
+
+.header-date {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+}
+
+/* --- Main Layout --- */
+.dashboard-main {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 1.25rem;
+}
+
+.subsection-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+}
+
+/* =========================================================
+   B. KPI Cards
+   ========================================================= */
+.kpi-section {
+    margin-bottom: 2.5rem;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+}
+
+.kpi-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--primary-500);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.kpi-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-700);
+    margin-bottom: 0.25rem;
+}
+
+.kpi-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-trend {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+}
+
+.kpi-trend.up {
+    color: var(--success);
+    background: var(--success-light);
+}
+
+.kpi-trend.down {
+    color: var(--danger);
+    background: var(--danger-light);
+}
+
+/* =========================================================
+   C. Overall Migration Progress
+   ========================================================= */
+.progress-section {
+    margin-bottom: 2.5rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.progress-track-wrapper {
+    position: relative;
+}
+
+.progress-track {
+    position: relative;
+    height: 28px;
+    background: var(--gray-100);
+    border-radius: 14px;
+    overflow: visible;
+    margin-bottom: 1rem;
+}
+
+.progress-fill {
+    height: 100%;
+    width: var(--progress-width, 0%);
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-400));
+    border-radius: 14px;
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 14px;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.milestone {
+    position: absolute;
+    top: -8px;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.milestone span {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    background: var(--surface);
+    border: 2px solid var(--gray-300);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 36px;
+    text-align: center;
+}
+
+.milestone-end span {
+    border-color: var(--primary-400);
+    color: var(--primary-600);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.progress-pct {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-700);
+}
+
+.progress-detail {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+}
+
+/* =========================================================
+   D. Migration Streams Table
+   ========================================================= */
+.table-section {
+    margin-bottom: 2.5rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.table-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.table-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.status-filter {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--gray-700);
+    background: var(--surface);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.status-filter:focus {
+    border-color: var(--primary-500);
+}
+
+.row-count {
+    font-size: 0.8rem;
+    color: var(--gray-400);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.streams-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.streams-table thead th {
+    background: var(--primary-50);
+    color: var(--primary-800);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--primary-200);
+    user-select: none;
+}
+
+.streams-table thead th.sortable {
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.streams-table thead th.sortable:hover {
+    background: var(--primary-100);
+}
+
+.sort-icon {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    margin-left: 0.25rem;
+}
+
+.streams-table thead th.sort-asc .sort-icon,
+.streams-table thead th.sort-desc .sort-icon {
+    opacity: 1;
+    color: var(--primary-600);
+}
+
+.streams-table tbody td {
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: middle;
+}
+
+.streams-table tbody tr:nth-child(even) {
+    background: var(--gray-50);
+}
+
+.streams-table tbody tr:hover {
+    background: var(--primary-50);
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-badge.complete {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.status-badge.in-progress {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.status-badge.planning {
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+/* Inline progress bar in table */
+.inline-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.inline-progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.inline-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-400));
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.inline-progress-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    min-width: 35px;
+    text-align: right;
+}
+
+/* =========================================================
+   E. Cost & ROI Comparison
+   ========================================================= */
+.cost-section {
+    margin-bottom: 2.5rem;
+}
+
+.cost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cost-card {
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.cost-card.traditional {
+    background: linear-gradient(135deg, #fff5f5, #ffe4e6);
+    border-left: 4px solid var(--danger);
+}
+
+.cost-card.ai-assisted {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-left: 4px solid var(--success);
+}
+
+.cost-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.traditional .cost-card-title {
+    color: var(--danger);
+}
+
+.ai-assisted .cost-card-title {
+    color: var(--success);
+}
+
+.cost-list {
+    list-style: none;
+}
+
+.cost-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.cost-list li:last-child {
+    border-bottom: none;
+}
+
+.cost-label {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.cost-value {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--gray-900);
+}
+
+.savings-banner {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+    border-radius: var(--radius);
+    color: #fff;
+    box-shadow: var(--shadow-md);
+}
+
+.savings-item {
+    text-align: center;
+}
+
+.savings-value {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.savings-label {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* =========================================================
+   F. FTE Man-Hours Saved Section
+   ========================================================= */
+.fte-section {
+    margin-bottom: 2.5rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--teal-500);
+}
+
+/* F1. FTE KPI Cards */
+.fte-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.fte-kpi-card {
+    background: var(--teal-50);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    text-align: center;
+    border: 1px solid var(--teal-200);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fte-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.fte-kpi-card.fte-highlight {
+    background: linear-gradient(135deg, var(--success-light), #bbf7d0);
+    border-color: var(--success);
+}
+
+.fte-kpi-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--teal-700);
+    margin-bottom: 0.25rem;
+}
+
+.fte-highlight .fte-kpi-value {
+    color: var(--success);
+}
+
+.fte-kpi-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.2rem;
+}
+
+.fte-kpi-note {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--gray-400);
+    font-style: italic;
+}
+
+/* F2. Bar Chart */
+.fte-bar-chart-wrapper {
+    margin-bottom: 2.5rem;
+}
+
+.fte-bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.bar-label {
+    width: 200px;
+    min-width: 200px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bar-track {
+    flex: 1;
+    height: 26px;
+    background: var(--gray-100);
+    border-radius: 13px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 13px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar-fill.status-complete {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.bar-fill.status-in-progress {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.bar-fill.status-planning {
+    background: linear-gradient(90deg, #9ca3af, #6b7280);
+}
+
+.bar-value {
+    min-width: 70px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--gray-700);
+}
+
+/* F3. Comparison Table */
+.fte-comparison-wrapper {
+    margin-bottom: 2rem;
+}
+
+.fte-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.fte-comparison-table thead th {
+    background: var(--teal-50);
+    color: var(--teal-800);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 2px solid var(--teal-200);
+}
+
+.fte-comparison-table tbody td {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.fte-comparison-table tbody tr:nth-child(even) {
+    background: var(--gray-50);
+}
+
+.fte-comparison-table tbody tr:hover {
+    background: var(--teal-50);
+}
+
+.fte-comparison-table tfoot td {
+    padding: 0.75rem 0.85rem;
+    font-weight: 700;
+    background: var(--teal-50);
+    border-top: 2px solid var(--teal-200);
+}
+
+.savings-pct {
+    font-weight: 700;
+    color: var(--success);
+}
+
+.table-footnote {
+    font-size: 0.78rem;
+    color: var(--gray-400);
+    font-style: italic;
+    margin-top: 0.75rem;
+}
+
+/* F4. FTE Savings Banner */
+.fte-savings-banner {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--success), var(--teal-600));
+    border-radius: var(--radius);
+    color: #fff;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.7;
+    box-shadow: var(--shadow-md);
+}
+
+.fte-savings-banner strong {
+    font-size: 1.25rem;
+}
+
+/* =========================================================
+   G. Footer
+   ========================================================= */
+.dashboard-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--gray-800);
+    color: var(--gray-400);
+    font-size: 0.85rem;
+}
+
+.dashboard-footer .disclaimer {
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* =========================================================
+   Responsive Breakpoints
+   ========================================================= */
+
+/* Tablet: <= 1200px */
+@media (max-width: 1200px) {
+    .kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .fte-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bar-label {
+        width: 160px;
+        min-width: 160px;
+    }
+}
+
+/* Small tablet: <= 900px */
+@media (max-width: 900px) {
+    .cost-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .savings-banner {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fte-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    .table-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Mobile: <= 600px */
+@media (max-width: 600px) {
+    .dashboard-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .dashboard-main {
+        padding: 1rem;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fte-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bar-label {
+        width: 100px;
+        min-width: 100px;
+        font-size: 0.72rem;
+    }
+
+    .bar-value {
+        min-width: 50px;
+        font-size: 0.72rem;
+    }
+
+    .kpi-value,
+    .fte-kpi-value {
+        font-size: 1.6rem;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+    }
+
+    .savings-banner {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .savings-value {
+        font-size: 1.2rem;
+    }
+
+    .fte-savings-banner {
+        font-size: 0.95rem;
+        padding: 1.25rem 1rem;
+    }
+}
